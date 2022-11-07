@@ -1,5 +1,4 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from movies.models import Movie
 
@@ -8,19 +7,21 @@ def movies_list(request):
     movies = Movie.objects.all()[:8]
     context = {
         "movies": movies,
-        "user": "Arash",
         "is_valid": True
     }
     return render(request, 'movies/movies_list.html', context=context)
 
 
 def movie_detail(request, pk):
-    return HttpResponse(f'<h1>This is movie {pk}</h1>')
+    movie = get_object_or_404(Movie, pk=pk)
+    return render(request, "movies/movie_detail.html",
+                  context={"movie": movie, "crews": movie.crew.all()})
 
 
 def form_view(request):
-    pass
+    return render(request, "movies/temp.html")
 
 
 def form_post(request):
-    pass
+    print(request.POST)
+    return render(request, "movies/temp.html", request.POST)

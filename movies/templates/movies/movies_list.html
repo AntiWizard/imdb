@@ -2,20 +2,24 @@
 {% block title %} Movies List {% endblock %}
 
 {% block content %}
-    {% if is_valid  %}
-    <h4>{{ user }}</h4>
-    {% endif %}
+    {#    {% if is_valid  %}#}
+    {#    <h4>{{ user }}</h4>#}
+    {#    {% endif %}#}
 
     <div class="content">
         <div class="row">
-            <p>Movies count: {{ movies.count }}</p>
+            {#            <p>Movies count: {{ movies.count }}</p>#}
             {% for movie in movies %}
-                <div class="col-sm-4 text-center card">
-                <img src="{{ movie.avatar.url }}" alt="Movie 1" class="avatar">
-                <a href={% url "movie_detail" movie.id %}>
-                <h4>{{ movie.title }}</h4>
-                </a>
-                <p>{{ movie.get_description }}</p>
+                <div class="col-lg-4 text-center card m-3" >
+                    <div>
+                        <img src="{{ movie.avatar.url }}" alt="{{ movie.title }}" class="avatar">
+                    </div>
+                    <br>
+                    <a class="title" href={% url "movie_detail" movie.id %}>
+                        <h4>{{ movie.title | title }}</h4>
+                    </a>
+                    <br>
+                    <p class="text-center">{{ movie.get_description | capfirst}}</p>
                 </div>
             {% endfor %}
         </div>
